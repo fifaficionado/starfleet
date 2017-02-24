@@ -148,9 +148,9 @@ object Starfleet {
         
         // partition mines into those cleared by torpedoes and those remaining (4*n -> linear performance)
         if (!volley.isEmpty) shots += 1
-        val (cleared, remaining) = fire(ship)(volley: _*)(mines: _*)
+        val (_, remaining) = fire(ship)(volley: _*)(mines: _*)
         mines = remaining.toList
-
+        
         // move ship
         if (movement != drop) moves += 1
         ship = move(movement, ship).head
@@ -159,7 +159,7 @@ object Starfleet {
         display(ship, mines: _*)
         
         // check game state
-        remaining match {
+        mines match {
           // all mines cleared, steps remaining
           case Nil if (index < (movements.length - 1)) => println("pass (1)"); return
           
